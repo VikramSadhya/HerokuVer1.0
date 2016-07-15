@@ -41,14 +41,13 @@ app.use(function(req, res, next) {
 
 app.get('/', function (req, res) {
   handle_database();
-  //pool.query('SELECT * FROM checkin', function(err, result) {
-    //if(err){
-        //throw err;
-      //} else {
-          //res.send(result);                
-        //}
-    //});
-    res.send("Welcome finally Database connected")
+  pool.query('SELECT * FROM checkin', function(err, result) {
+    if(err){
+        throw err;
+      } else {
+          res.send(result);                
+        }
+    });
 });
 
 app.listen(port, function(err, req, res){
