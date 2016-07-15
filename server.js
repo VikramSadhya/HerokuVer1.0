@@ -41,7 +41,7 @@ app.use(express.static('public'));
 
 app.post('/postdata', function (req, res) {
   handle_database();
-  var data ={ url: req.bidy.url,
+  var data ={ url: req.body.url,
       status: "Activated"
   };
   pool.query('INSERT INTO checkin SET ?', data, function(err, result) {
