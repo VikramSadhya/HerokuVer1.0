@@ -9,11 +9,10 @@ var port = Number(process.env.PORT || 5000);
 
 var pool = mysql.createPool({
 host:'nj5rh9gto1v5n05t.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-user:'dm1hckioeuf6q8a7',
-password:'ajavgx3ftunxe4sg',
-database:'yiih66ar40rxzfc8',
+user:'uchuz9pmlrpancnr',
+password:'f5bqyxfgb9xrfqo6',
+database:'v15rdekxud3l4cjn',
 port: 3306,
-debug: false,
 connectionLimit: 100
 });
 
