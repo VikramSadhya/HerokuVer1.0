@@ -39,7 +39,7 @@ app.use(function(req, res, next) {
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static('public'));
 
-app.get('/postdata', function (req, res) {
+app.post('/postdata', function (req, res) {
   handle_database();
   pool.query('SELECT * FROM checkin', function(err, result) {
     if(err){
