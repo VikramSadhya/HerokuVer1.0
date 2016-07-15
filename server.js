@@ -8,10 +8,10 @@ var mysql = require('mysql');
 var port = Number(process.env.PORT || 5000);
 
 var pool = mysql.createPool({
-host:'db.cct.lsu.edu',
-user:'vsadhya',
-password:'abcdef67',
-database:'beacon',
+host:'nj5rh9gto1v5n05t.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+user:'dm1hckioeuf6q8a7',
+password:'ajavgx3ftunxe4sg',
+database:'yiih66ar40rxzfc8',
 port: 3306,
 debug: false,
 connectionLimit: 100
@@ -41,13 +41,14 @@ app.use(function(req, res, next) {
 
 app.get('/', function (req, res) {
   handle_database();
-  pool.query('SELECT * FROM checkin', function(err, result) {
-    if(err){
-        throw err;
-      } else {
-          res.send(result);                
-        }
-    });
+  //pool.query('SELECT * FROM checkin', function(err, result) {
+    //if(err){
+        //throw err;
+      //} else {
+          //res.send(result);                
+        //}
+    //});
+    res.send("Welcome finally Database connected")
 });
 
 app.listen(port, function(err, req, res){
