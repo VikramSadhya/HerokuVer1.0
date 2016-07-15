@@ -41,11 +41,14 @@ app.use(express.static('public'));
 
 app.post('/postdata', function (req, res) {
   handle_database();
-  pool.query('SELECT * FROM checkin', function(err, result) {
+  var data ={ url: req.bidy.url,
+      status: "Activated"
+  };
+  pool.query('INSERT INTO checkin SET ?', data, function(err, result) {
     if(err){
         throw err;
       } else {
-          res.send(result);                
+          res.sendFile(__dirname + '/public/logout.html');                
         }
     });
 });
