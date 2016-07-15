@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html>
+	<head> 
+		<link href="mycss.css" rel="stylesheet" media = "screen">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body>
+		<div class="header">
+			<p>Your message has been recorded. Our recovery team is on their way. Stay where you are.</p>
+		</div>
+		<div class="wrapper">
+			<p class="data">Please click on the button below to let us know when our team arrives!!</p>
+			<form id = "homepage" action="/postcheckout" method="POST">
+				<input type="hidden" name = "url" id="url" value="localhost:8080/public/beaconcheckin.html"> </input>
+				<input type="hidden" name="message" id="message" value="Deactivated"> </input>
+				<button id= "checkout">Thanks!!!</button>
+			</form>
+		</div>
+		<div class="footer">
+			Developed by DDSLab Team
+		</div>
+	</body>
+</html>

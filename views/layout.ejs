@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <link href="mycss.css" rel="stylesheet" media = "screen">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+<body>
+    <div class="header">
+        <h2>Summary of data received from Beacons</h2>
+    </div>
+    <div class="wrapper">
+    <table id="tabledata">  
+        <thead text-align="center">  
+            <tr>  
+                <th>Beacon ID</th>  
+                <th>Status</th>  
+                <th>Activity Timestamp</th>  
+            </tr>  
+        </thead>  
+         <tbody>  
+         <% checkin.forEach(function (checkin) { %>
+            <tr>  
+                <td><%= checkin.url %></td>  
+                <td><%= checkin.status %></td>
+                <td><%= checkin.datetimelastupdated %></td>
+            
+            </tr>                                   
+         <% }) %>
+         </tbody>
+    </table>
+    </div>
+    <div class="footer">
+        Developed by DDSLab Team
+    </div>
+</body>
+
+</html>
