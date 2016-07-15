@@ -52,6 +52,22 @@ app.post('/postdata', function (req, res) {
     });
 });
 
+
+app.post('/postcheckout', function(req,res){
+ handle_database();
+  var data ={ url: req.body.url,
+      status: "Deactivated"
+  };
+pool.query('INSERT INTO checkin SET ?', data, function(err, result) {
+    if(err){
+        throw err;
+      } else {
+          res.sendFile(__dirname + '/public/thankyou.html');                
+        }
+    });
+
+})
+
 app.listen(port, function(err, req, res){
   if (err){
     console.log("Failed to start app at port:%s", port);
