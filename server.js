@@ -1,5 +1,4 @@
 var express = require('express');
-var connect = require('connect');
 var path = require('path');
 var app = express();
 var bodyParser = require('body-parser');
@@ -28,20 +27,22 @@ function handle_database(req,res) {
         });
   };
 
-
-app.use(function(req, res, next) {
-  console.log(`${req.method} request for ${req.url}`);
-  next();
-
-});
-
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static('public'));
 
+app.get('/', function (req, res) {
+    res.sendFile(__dirname + '/public/index.html');
+});
+
+app.get('*', function (req, res) {
+    res.sendFile(__dirname + '/public/about.html');
+});
+
 app.post('/postdata', function (req, res) {
   handle_database();
-  var data ={ url: req.body.url,
-      status: "Activated"
+  var data ={ beaconId: req.url,
+      status: "Activated",
+      location: "Bld1"
   };
   pool.query('INSERT INTO checkin SET ?', data, function(err, result) {
     if(err){
@@ -55,8 +56,9 @@ app.post('/postdata', function (req, res) {
 
 app.post('/postcheckout', function(req,res){
  handle_database();
-  var data ={ url: req.body.url,
-      status: "Deactivated"
+  var data ={ beaconId: req.url,
+      status: "Deactivated",
+      location: "Bld1"
   };
 pool.query('INSERT INTO checkin SET ?', data, function(err, result) {
     if(err){
