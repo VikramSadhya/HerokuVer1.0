@@ -53,7 +53,6 @@ app.post('/postdata', function (req, res) {
     });
 });
 
-
 app.post('/postcheckout', function(req,res){
  handle_database();
   var data ={ beaconId: req.url,
@@ -67,8 +66,7 @@ pool.query('INSERT INTO checkin SET ?', data, function(err, result) {
           res.sendFile(__dirname + '/public/thankyou.html');                
         }
     });
-
-})
+});
 
 app.listen(port, function(err, req, res){
   if (err){
