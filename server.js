@@ -35,12 +35,13 @@ app.get('/', function (req, res) {
 });
 
 app.get('*', function (req, res) {
+    bid = req.url
     res.sendFile(__dirname + '/public/about.html');
 });
 
 app.post('/postdata', function (req, res) {
   handle_database();
-  var data ={ beaconId: req.url,
+  var data ={ beaconId: bid,
       status: "Activated",
       location: "Bld1"
   };
@@ -55,7 +56,7 @@ app.post('/postdata', function (req, res) {
 
 app.post('/postcheckout', function(req,res){
  handle_database();
-  var data ={ beaconId: req.url,
+  var data ={ beaconId: bid,
       status: "Deactivated",
       location: "Bld1"
   };
