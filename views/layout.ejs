@@ -12,16 +12,18 @@
         <thead text-align="center">  
             <tr>  
                 <th>Beacon ID</th>  
-                <th>Status</th>  
+                <th>Status</th>
+                <th>Location</th>   
                 <th>Activity Timestamp</th>  
             </tr>  
         </thead>  
          <tbody>  
          <% checkin.forEach(function (checkin) { %>
             <tr>  
-                <td><%= checkin.url %></td>  
+                <td><%= checkin.beaconId %></td>  
                 <td><%= checkin.status %></td>
-                <td><%= checkin.datetimelastupdated %></td>
+                <td><%= checkin.location %></td>
+                <td><%= checkin.time %></td>
             
             </tr>                                   
          <% }) %>

@@ -8,10 +8,10 @@ var favicon = require('express-favicon');
 var port = Number(process.env.PORT || 5000);
 
 var pool = mysql.createPool({
-host:'hostname',
-user:'username',
-password:'password',
-database:'dbname',
+host:'nj5rh9gto1v5n05t.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+user:'biwc8bxt1o6ddcof',
+password:'ad3z6d6hi38qx7hq',
+database:'d8qezgj2y3scpj7i',
 port: 3306,
 connectionLimit: 100
 });
@@ -71,6 +71,20 @@ pool.query('INSERT INTO checkin SET ?', data, function(err, result) {
           res.sendFile(__dirname + '/public/thankyou.html');                
         }
     });
+});
+
+
+var obj = {};
+app.get('/data', function(req, res){
+  handle_database();
+  pool.query('SELECT * FROM checkin', function(err, result) {
+    if(err){
+      throw err;
+    } else {
+      obj = {checkin: result};
+      res.render('layout', obj);                
+    }
+  });
 });
 
 app.listen(port, function(err, req, res){
