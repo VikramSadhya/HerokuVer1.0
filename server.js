@@ -64,7 +64,7 @@ app.post('/postcheckout', function(req,res){
       status: "Deactivated",
       location: loc
   };
-pool.query('INSERT INTO checkin SET ?', data, function(err, result) {
+  pool.query('INSERT INTO checkin SET ?', data, function(err, result) {
     if(err){
         throw err;
       } else {
@@ -73,7 +73,7 @@ pool.query('INSERT INTO checkin SET ?', data, function(err, result) {
     });
 });
 
-
+app.set('view engine', 'ejs');
 var obj = {};
 app.get('/data', function(req, res){
   handle_database();
