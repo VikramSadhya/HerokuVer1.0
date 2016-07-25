@@ -8,10 +8,10 @@ var favicon = require('express-favicon');
 var port = Number(process.env.PORT || 5000);
 
 var pool = mysql.createPool({
-host:'nj5rh9gto1v5n05t.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-user:'biwc8bxt1o6ddcof',
-password:'ad3z6d6hi38qx7hq',
-database:'d8qezgj2y3scpj7i',
+host:'hostname',
+user:'username',
+password:'password',
+database:'dbname',
 port: 3306,
 connectionLimit: 100
 });
