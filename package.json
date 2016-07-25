@@ -8,6 +8,7 @@
     "connect": "^3.4.1",
     "ejs": "^2.4.2",
     "express": "^4.14.0",
+    "express-favicon": "^1.0.1",
     "mysql": "^2.11.1"
   },
   "devDependencies": {},

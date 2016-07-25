@@ -3,6 +3,7 @@ var path = require('path');
 var app = express();
 var bodyParser = require('body-parser');
 var mysql = require('mysql');
+var favicon = require('express-favicon');
 
 var port = Number(process.env.PORT || 5000);
 
@@ -29,21 +30,23 @@ function handle_database(req,res) {
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static('public'));
+app.use(favicon(__dirname + '/public/favicon.ico'));
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/public/index.html');
 });
 
 app.get('*', function (req, res) {
-    bid = req.url
+    bid = path.basename(req.path);
     res.sendFile(__dirname + '/public/about.html');
 });
 
 app.post('/postdata', function (req, res) {
   handle_database();
+  var loc = "Bldg" + bid.match(/\d+$/)[0];
   var data ={ beaconId: bid,
       status: "Activated",
-      location: "Bld1"
+      location: loc
   };
   pool.query('INSERT INTO checkin SET ?', data, function(err, result) {
     if(err){
@@ -56,9 +59,10 @@ app.post('/postdata', function (req, res) {
 
 app.post('/postcheckout', function(req,res){
  handle_database();
+ var loc = "Bldg" + bid.match(/\d+$/)[0];
   var data ={ beaconId: bid,
       status: "Deactivated",
-      location: "Bld1"
+      location: loc
   };
 pool.query('INSERT INTO checkin SET ?', data, function(err, result) {
     if(err){
