@@ -36,7 +36,7 @@ app.get('/', function (req, res) {
     res.sendFile(__dirname + '/public/index.html');
 });
 
-app.get('*', function (req, res) {
+app.get('/b*', function (req, res) {
     bid = path.basename(req.path);
     res.sendFile(__dirname + '/public/about.html');
 });
