@@ -8,13 +8,12 @@ var favicon = require('express-favicon');
 var port = Number(process.env.PORT || 5000);
 
 var pool = mysql.createPool({
-host:'hostname',
-user:'username',
-password:'password',
-database:'dbname',
+host:'nj5rh9gto1v5n05t.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+user:'biwc8bxt1o6ddcof',
+password:'ad3z6d6hi38qx7hq',
+database:'d8qezgj2y3scpj7i',
 port: 3306,
-connectionLimit: 100,
-timezone: 'cst'
+connectionLimit: 100
 });
 
 function handle_database(req,res) {
@@ -44,34 +43,49 @@ app.get('/b*', function (req, res) {
 
 app.post('/postdata', function (req, res) {
   handle_database();
-  var loc = "Bldg" + bid.match(/\d+$/)[0];
-  var data ={ beaconId: bid,
-      status: "Activated",
-      location: loc
+  pool.query('SELECT location from beacon where balias = ?', bid, function(err, result) {
+  if(err){
+    res.sendFile(__dirname + '/public/beaconerror.html');
+  } else {
+    try{
+      var bloc = result[0].location;
+    } catch (error) {
+        res.sendFile(__dirname + '/public/beaconerror.html');
+    }
+    var data ={ beaconId: bid,
+    status: "Activated",
+    location: bloc
   };
-  pool.query('INSERT INTO checkin SET ?', data, function(err, result) {
-    if(err){
-        throw err;
-      } else {
-          res.sendFile(__dirname + '/public/logout.html');                
-        }
-    });
+     pool.query('INSERT INTO checkin SET ?', data, function(err, result) {
+  if(err){
+    throw err;
+  } else {
+    res.sendFile(__dirname + '/public/logout.html');                
+  }
+  });             
+  }
+  });
 });
 
 app.post('/postcheckout', function(req,res){
  handle_database();
- var loc = "Bldg" + bid.match(/\d+$/)[0];
-  var data ={ beaconId: bid,
-      status: "Deactivated",
-      location: loc
+ pool.query('SELECT location from beacon where balias = ?', bid, function(err, result) {
+  if(err){
+    throw err;
+  } else {
+    data ={ beaconId: bid,
+    status: "Deactivated",
+    location: result[0].location
   };
-  pool.query('INSERT INTO checkin SET ?', data, function(err, result) {
-    if(err){
-        throw err;
-      } else {
-          res.sendFile(__dirname + '/public/thankyou.html');                
-        }
-    });
+     pool.query('INSERT INTO checkin SET ?', data, function(err, result) {
+  if(err){
+    throw err;
+  } else {
+    res.sendFile(__dirname + '/public/thankyou.html');                
+  }
+  });             
+  }
+  });
 });
 
 app.set('view engine', 'ejs');
