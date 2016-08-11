@@ -13,7 +13,8 @@ user:'biwc8bxt1o6ddcof',
 password:'ad3z6d6hi38qx7hq',
 database:'d8qezgj2y3scpj7i',
 port: 3306,
-connectionLimit: 100
+connectionLimit: 100,
+dateStrings : true
 });
 
 function handle_database(req,res) {
