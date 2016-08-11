@@ -13,7 +13,8 @@ user:'username',
 password:'password',
 database:'dbname',
 port: 3306,
-connectionLimit: 100
+connectionLimit: 100,
+timezone: 'cst'
 });
 
 function handle_database(req,res) {
