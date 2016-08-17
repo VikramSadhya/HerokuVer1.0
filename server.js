@@ -104,6 +104,19 @@ app.get('/data', function(req, res){
   });
 });
 
+app.get('/resettable', function(req, res){
+  handle_database();
+  pool.query('TRUNCATE table checkin');
+  pool.query('SELECT * FROM checkin', function(err, result) {
+    if(err){
+      throw err;
+    } else {
+      obj = {checkin: result};
+      res.render('layout', obj);                
+    }
+  });
+});
+
 app.listen(port, function(err, req, res){
   if (err){
     console.log("Failed to start app at port:%s", port);
