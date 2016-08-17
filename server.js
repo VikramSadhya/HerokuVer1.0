@@ -51,10 +51,7 @@ app.post('/postdata', function (req, res) {
   } else {
     try{
       var bloc = result[0].location;
-    } catch (error) {
-        res.sendFile(__dirname + '/public/beaconerror.html');
-    }
-    var data ={ beaconId: bid,
+      var data ={ beaconId: bid,
     status: "Activated",
     location: bloc
   };
@@ -64,7 +61,10 @@ app.post('/postdata', function (req, res) {
   } else {
     res.sendFile(__dirname + '/public/logout.html');                
   }
-  });             
+  });
+    } catch (error) {
+        res.sendFile(__dirname + '/public/beaconerror.html');
+    }             
   }
   });
 });
@@ -104,7 +104,7 @@ app.get('/data', function(req, res){
   });
 });
 
-app.get('/resettable', function(req, res){
+app.post('/resettable', function(req, res){
   handle_database();
   pool.query('TRUNCATE table checkin');
   pool.query('SELECT * FROM checkin', function(err, result) {
