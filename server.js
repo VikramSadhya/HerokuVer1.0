@@ -104,6 +104,18 @@ app.get('/data', function(req, res){
   });
 });
 
+app.get('/refresh', function(req, res){
+  handle_database();
+  pool.query('SELECT * FROM beacon', function(err, result) {
+    if(err){
+      throw err;
+    } else {
+      obj = {checkin: result};
+      res.render('layout', obj);                
+    }
+  });
+});
+
 app.post('/resettable', function(req, res){
   handle_database();
   pool.query('TRUNCATE table checkin');
