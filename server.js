@@ -68,6 +68,7 @@ app.post('/postdata', function (req, res) {
     }             
   }
   });
+  connection.release();
 });
 
 app.post('/postcheckout', function(req,res){
@@ -89,6 +90,7 @@ app.post('/postcheckout', function(req,res){
   });             
   }
   });
+ connection.release();
 });
 
 app.set('view engine', 'ejs');
@@ -103,6 +105,7 @@ app.get('/data', function(req, res){
       res.render('layout', obj);                
     }
   });
+  connection.release();
 });
 
 app.post('/resettable', function(req, res){
@@ -116,6 +119,7 @@ app.post('/resettable', function(req, res){
       res.render('layout', obj);                
     }
   });
+  connection.release();
 });
 
 app.listen(port, function(err, req, res){
