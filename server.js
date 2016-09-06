@@ -100,6 +100,20 @@ app.get('/data', function(req, res){
 });
 });
 
+app.get('/refresh', function(req, res){
+  pool.getConnection(function(err, connection){
+  connection.query( 'SELECT * FROM checkin',  function(err, result){
+    if(err) {
+      throw err;
+    }else{
+      obj = {checkin: result};
+      res.render('layout', obj);
+    }
+  });
+  connection.release();
+});
+});
+
 app.post('/resettable', function(req, res){
   pool.getConnection(function(err, connection){
   connection.query('TRUNCATE table checkin');
