@@ -22,18 +22,6 @@ dateStrings: true,
 timezone: 'ct'
 });
 
-function handle_database(req,res) {
-    pool.getConnection(function(err,connection){
-        if (err) {
-          connection.release();
-          console.log('Database Connection failed');
-          return;
-        } else {
-          console.log('Connected to database'); 
-        }
-        });
-  };
-
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/public/index.html');
@@ -45,8 +33,8 @@ app.get('/b*', function (req, res) {
 });
 
 app.post('/postdata', function (req, res) {
-  handle_database();
-  pool.query('SELECT location from beacon where balias = ?', bid, function(err, result) {
+  pool.getConnection(function(err, connection){
+  connection.query('SELECT location from beacon where balias = ?', bid, function(err, result) {
   if(err){
     res.sendFile(__dirname + '/public/beaconerror.html');
   } else {
@@ -56,7 +44,7 @@ app.post('/postdata', function (req, res) {
     status: "Activated",
     location: bloc
   };
-     pool.query('INSERT INTO checkin SET ?', data, function(err, result) {
+     connection.query('INSERT INTO checkin SET ?', data, function(err, result) {
   if(err){
     throw err;
   } else {
@@ -68,11 +56,13 @@ app.post('/postdata', function (req, res) {
     }             
   }
   });
+  connection.release();
+});
 });
 
 app.post('/postcheckout', function(req,res){
- handle_database();
- pool.query('SELECT location from beacon where balias = ?', bid, function(err, result) {
+ pool.getConnection(function(err, connection){
+ connection.query('SELECT location from beacon where balias = ?', bid, function(err, result) {
   if(err){
     throw err;
   } else {
@@ -80,7 +70,7 @@ app.post('/postcheckout', function(req,res){
     status: "Deactivated",
     location: result[0].location
   };
-     pool.query('INSERT INTO checkin SET ?', data, function(err, result) {
+     connection.query('INSERT INTO checkin SET ?', data, function(err, result) {
   if(err){
     throw err;
   } else {
@@ -89,33 +79,40 @@ app.post('/postcheckout', function(req,res){
   });             
   }
   });
+ connection.release();
+});
 });
 
 app.set('view engine', 'ejs');
 var obj = {};
+
 app.get('/data', function(req, res){
-  handle_database();
-  pool.query('SELECT * FROM checkin', function(err, result) {
-    if(err){
+  pool.getConnection(function(err, connection){
+  connection.query( 'SELECT * FROM checkin',  function(err, result){
+    if(err) {
       throw err;
-    } else {
+    }else{
       obj = {checkin: result};
-      res.render('layout', obj);                
+      res.render('layout', obj);
     }
   });
+  connection.release();
+});
 });
 
 app.post('/resettable', function(req, res){
-  handle_database();
-  pool.query('TRUNCATE table checkin');
-  pool.query('SELECT * FROM checkin', function(err, result) {
-    if(err){
+  pool.getConnection(function(err, connection){
+  connection.query('TRUNCATE table checkin');
+  connection.query( 'SELECT * FROM checkin',  function(err, result){
+    if(err) {
       throw err;
-    } else {
+    }else{
       obj = {checkin: result};
-      res.render('layout', obj);                
+      res.render('layout', obj);
     }
   });
+  connection.release();
+});
 });
 
 app.listen(port, function(err, req, res){
