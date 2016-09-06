@@ -17,7 +17,7 @@ user:'bikjev1qj9iiyqo8',
 password:'npkb2rqdf9m6rdfq',
 database:'s3zaxupkdhjfrv79',
 port: 3306,
-connectionLimit: 100,
+connectionLimit: 10,
 dateStrings: true,
 timezone: 'ct'
 });
